@@ -89,16 +89,35 @@ unemp_top_decreases_no_covid <- unemp |>
 ##Visualizations 
 #Line plots
 ggplot(unemp, aes(x=date,y=unemployment_rate, color= region))+
-  labs(x="Time",y="Unemployment", title = "Unemployment Over Time")+
+  labs(x="Time",y="Unemployment Rate (percent)", title = "Unemployment Over Time")+
   geom_line()+
   theme_minimal()
 
 ggplot(unemp, aes(x=date,y=unemployment_rate))+
-  labs(title = "Unemployment Rate by Region",y="Unemployment Rate",x="Time")+
+  labs(title = "Unemployment Rate by Region",y="Unemployment Rate (percent)",x="Time")+
   geom_line()+
   facet_wrap(~ region,ncol=1)+
   scale_y_continuous(breaks = seq(4, 16, by = 2),
                      labels = scales::label_number(suffix = "%"))+
   theme_minimal()
 
+#Bar Chart
+ggplot(unemp_summary, aes(x=fct_reorder(region, mean_rate),y=mean_rate))+
+  geom_col()+
+  labs(title = "Average Unemployment by Region", x="Region",y="Unemployment Rate (percent)")+
+  theme_minimal()
+
+##Change in unemployment over time
+ggplot(unemp|>filter_out(date >= "2013-01-01"| date <= "2005-01-01"),
+       aes(x=date,y=unemployment_rate_change, color= region))+
+  labs(x="Time",y="Unemployment Rate Change (percent)",
+       title = "Unemployment Rate Change, Great Recession")+
+  facet_wrap(~ region,ncol=1)+
+  geom_line()+
+  theme_minimal()
+
+#Here I'm plotting change in unemployment rate over the period shortly before, during, 
+#and after the great recession. I chose this because I wanted to see how different states,
+#which intuitively have jobs distributed across different sectors differently, were affected
+#by the crisis.
 
