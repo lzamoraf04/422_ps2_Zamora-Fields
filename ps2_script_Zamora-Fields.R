@@ -86,4 +86,19 @@ unemp_top_decreases_no_covid <- unemp |>
   slice_min(order_by = unemployment_rate_change, n=5)
 
 
+##Visualizations 
+#Line plots
+ggplot(unemp, aes(x=date,y=unemployment_rate, color= region))+
+  labs(x="Time",y="Unemployment", title = "Unemployment Over Time")+
+  geom_line()+
+  theme_minimal()
+
+ggplot(unemp, aes(x=date,y=unemployment_rate))+
+  labs(title = "Unemployment Rate by Region",y="Unemployment Rate",x="Time")+
+  geom_line()+
+  facet_wrap(~ region,ncol=1)+
+  scale_y_continuous(breaks = seq(4, 16, by = 2),
+                     labels = scales::label_number(suffix = "%"))+
+  theme_minimal()
+
 
