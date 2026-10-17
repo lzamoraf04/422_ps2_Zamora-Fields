@@ -1,5 +1,6 @@
 library(tidyverse)
 library(tidyquant)
+library(knitr)
 
 ##Initial data read
 #unemp_raw <- tq_get(
